@@ -1,4 +1,5 @@
 # Richtext WYSIWYG Editors for Yesod Forms #
+[![Build Status](https://travis-ci.org/geraldus/yesod-form-richtext.svg?branch=master)](https://travis-ci.org/geraldus/yesod-form-richtext)
 
 Currently provides following editors support:
 + [Summernote](http://summernote.org/)
