@@ -1,38 +1,22 @@
+-- | Provide the user with the Summernote rich text editor.
+--
+-- /NOTES:/
+--
+-- Editor fields have hidden textareas which are updated automatically when
+-- editor contents changes.
+--
+-- @
+-- summerForm :: Form HtmlComment
+-- summerForm = renderBootstrap3 BootstrapBasicForm $ HtmlComment
+--   \<$\> areq (snHtmlFieldCustomized "{toolbar:false}") "Title" Nothing
+--   \<*\> areq snHtmlField "Comment" Nothing
+-- @
+
 module Yesod.Form.Summernote
     ( YesodSummernote (..)
     , snHtmlField
     , snHtmlFieldCustomized
     ) where
-
--- | Provide the user with the Summernote rich text editor.
---
--- /Note: current implementaion supposes that you set identifiers to editor
--- fields, that is you should provide 'FieldSettings' with 'fsId' set to
--- @Just@-value./
---
--- /Editor fields have hidden textareas with specified identifiers which are
--- updated automatically when editor content changes./
---
--- @
--- summerForm :: Form HtmlComment
--- summerForm = renderBootstrap3 BootstrapBasicForm $ HtmlComment
---   <$> areq (snHtmlFieldCustomized "{toolbar:false}") stitle Nothing
---   <*> areq snHtmlField sbody Nothing
---   where
---     stitle = FieldSettings
---       { fsLabel = "HTML Comment Title"
---       , fsId = Just "html-comment-title"
---       , fsTooltip = Nothing
---       , fsName = Nothing
---       , fsAttrs = [] }
---     sbody = FieldSettings
---       { fsLabel = "HTML Comment Body"
---       , fsId = Just "html-comment-body"
---       , fsTooltip = Nothing
---       , fsName = Nothing
---       , fsAttrs = [] }
--- @
-
 
 import           Control.Monad                   (when)
 import           Data.Maybe                      (listToMaybe)
@@ -67,18 +51,18 @@ class Yesod a => YesodSummernote a where
         "http://cdnjs.cloudflare.com/ajax/libs/summernote/0.8.0/summernote.js"
     -- | Should required libraries and scripts be added in DOM tree?  This
     -- property required to control script loading.  In case if you load JQuery,
-    -- Bootstrap, and Summernote libraries and CSS in <head> it is not necessary
-    -- to load them second time, moreover this could bring some issues, for
-    -- example if JQuery is loaded second time it could brake AJAX configuration
-    -- from 'defaultCsrfMiddleware'.  Setting this to 'True' could be useful in
-    -- case you need single instance of editor on some pages only.
+    -- Bootstrap, and Summernote libraries and CSS in @<head>@ it is not
+    -- necessary to load them second time, moreover this could bring some
+    -- issues, for example if JQuery is loaded second time it could brake AJAX
+    -- configuration from 'defaultCsrfMiddleware'.  Setting this to @True@ could
+    -- be useful in case you need single instance of editor on some pages only.
     summernoteLoadLibrariesAndCss :: a -> Bool
     summernoteLoadLibrariesAndCss _ = False
 
 -- | Customizable Summernote editor field.
 --
--- @cfg@ argument should be a JSON string object, it will be passed to
--- @summernote()@ function as argument.
+-- @cfg@ argument should be a JSON formatted string, it will be passed to
+-- @$.summernote()@ call as first argument.
 --
 -- @
 -- snHtmlFieldCustomized "{ height: 150, codemirror: { theme:'monokai' } }"
