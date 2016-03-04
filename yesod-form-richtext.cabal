@@ -8,7 +8,7 @@ license-file:        LICENSE
 author:              Arthur S. Fayzrakhmanov
 maintainer:          heraldhoi@gmail.com
 copyright:           2016 Arthur S. Fayzrakhmanov
-category:            Web
+category:            Web, Yesod
 build-type:          Simple
 cabal-version:       >=1.10
 
