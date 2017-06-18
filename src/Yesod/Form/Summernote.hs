@@ -67,8 +67,9 @@ class Yesod a => YesodSummernote a where
 -- @
 -- snHtmlFieldCustomized "{ height: 150, codemirror: { theme:'monokai' } }"
 -- @
-snHtmlFieldCustomized :: YesodSummernote site
-                      => String -> Field (HandlerT site IO) Html
+snHtmlFieldCustomized :: (YesodSummernote site, MonadHandler m)
+                      => String
+                      -> Field (HandlerT site m) Html
 snHtmlFieldCustomized cfg = Field
     { fieldParse =
         \e _ -> return $
@@ -98,7 +99,8 @@ $(document).ready(function(){
     showVal = either id (pack . renderHtml)
 
 -- | Summernote editor field with default settings.
-snHtmlField :: YesodSummernote site => Field (HandlerT site IO) Html
+snHtmlField :: (YesodSummernote site, MonadHandler m)
+            => Field (HandlerT site m) Html
 snHtmlField = snHtmlFieldCustomized ""
 
 
